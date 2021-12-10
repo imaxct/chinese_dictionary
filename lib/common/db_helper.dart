@@ -29,6 +29,6 @@ class DbHelper {
     var bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
     await File(path).writeAsBytes(bytes, flush: true);
 
-    return await openDatabase(path);
+    return await openDatabase(path, readOnly: true);
   }
 }
