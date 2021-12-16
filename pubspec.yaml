@@ -34,6 +34,7 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  sqflite: ^2.0.1
 
 dev_dependencies:
   flutter_test:
@@ -57,6 +58,18 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
+  assets:
+    - assets/db/content.db
+    - assets/character/orthography_ct_finals.tsv
+    - assets/character/orthography_ct_initials.tsv
+    - assets/character/orthography_hz_variants.txt
+    - assets/character/orthography_jp.tsv
+    - assets/character/orthography_mc_bieng_sjyix.tsv
+    - assets/character/orthography_mc_finals.tsv
+    - assets/character/orthography_mc_initials.tsv
+    - assets/character/orthography_pu_bopomofo.tsv
+    - assets/character/orthography_pu_pinyin.tsv
+    - assets/character/orthography_vn.tsv
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
