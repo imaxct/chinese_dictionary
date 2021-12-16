@@ -1,10 +1,16 @@
+import 'package:chinese_dictionary/dict/cantonese_orthography.dart';
 import 'package:chinese_dictionary/dict/mandarin_orthography.dart';
 import 'package:flutter/material.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await MandarinOrthography.instance.init();
+  await _init();
   runApp(const App());
+}
+
+Future<void> _init() async {
+  await MandarinOrthography.instance.init();
+  await CantoneseOrthography.instance.init();
 }
 
 class App extends StatelessWidget {

@@ -7,52 +7,52 @@ class MandarinOrthography extends Orthography {
   static final MandarinOrthography instance = MandarinOrthography._();
 
   /// e.g. a1 -> ā; ǒ -> o3
-  static late final Map<String, String> mapPinyin;
+  static late final Map<String, String> _mapPinyin;
 
-  /// e.g. ㄓ -> zh zhi
-  static late final Map<String, String> mapFromBopomofoPartial;
+  /// e.g. ㄓ -> zh
+  static late final Map<String, String> _mapFromBopomofoPartial;
 
   /// reverse of mapFromBopomofoPartial
-  static late final Map<String, String> mapToBopomofoPartial;
+  static late final Map<String, String> _mapToBopomofoPartial;
 
   /// e.g. e.g. ˊ -> 2
-  static late final Map<String, String> mapFromBopomofoTone;
+  static late final Map<String, String> _mapFromBopomofoTone;
 
   /// reverse of mapFromBopomofoTone
-  static late final Map<String, String> mapToBopomofoTone;
+  static late final Map<String, String> _mapToBopomofoTone;
 
   /// e.g. ㄓ -> zhi
-  static late final Map<String, String> mapFromBopomofoWhole;
+  static late final Map<String, String> _mapFromBopomofoWhole;
 
   /// reverse of mapFromBopomofoWhole
-  static late final Map<String, String> mapToBopomofoWhole;
+  static late final Map<String, String> _mapToBopomofoWhole;
 
-  final vowels = ['a', 'o', 'e', 'i', 'u', 'v', 'n', 'm'];
+  final _vowels = ['a', 'o', 'e', 'i', 'u', 'v', 'n', 'm'];
 
   @override
-  String? canonicalize(String input) {
+  String? canonicalize(String input, int system) {
     if (input.isEmpty) return null;
 
-    if (mapFromBopomofoPartial.containsKey(input[0]) ||
-        mapFromBopomofoTone.containsKey(input[0])) {
+    if (_mapFromBopomofoPartial.containsKey(input[0]) ||
+        _mapFromBopomofoTone.containsKey(input[0])) {
       // input is bopomofo
 
       // the tone can be either first one or last one.
       var tone = '1';
-      if (mapFromBopomofoTone.containsKey(input[0])) {
-        tone = mapFromBopomofoTone[input[0]]!;
+      if (_mapFromBopomofoTone.containsKey(input[0])) {
+        tone = _mapFromBopomofoTone[input[0]]!;
         input = input.substring(1);
-      } else if (mapFromBopomofoTone.containsKey(input[input.length - 1])) {
-        tone = mapFromBopomofoTone[input[input.length - 1]]!;
+      } else if (_mapFromBopomofoTone.containsKey(input[input.length - 1])) {
+        tone = _mapFromBopomofoTone[input[input.length - 1]]!;
         input = input.substring(0, input.length - 1);
       }
       if (input.isEmpty) return null;
-      if (mapFromBopomofoWhole.containsKey(input)) {
-        input = mapFromBopomofoWhole[input]!;
-      } else if (mapFromBopomofoPartial.containsKey(input[0]) &&
-          mapFromBopomofoPartial.containsKey(input.substring(1))) {
-        input = mapFromBopomofoPartial[input[0]]! +
-            mapFromBopomofoPartial[input.substring(1)]!;
+      if (_mapFromBopomofoWhole.containsKey(input)) {
+        input = _mapFromBopomofoWhole[input]!;
+      } else if (_mapFromBopomofoPartial.containsKey(input[0]) &&
+          _mapFromBopomofoPartial.containsKey(input.substring(1))) {
+        input = _mapFromBopomofoPartial[input[0]]! +
+            _mapFromBopomofoPartial[input.substring(1)]!;
         if (input.startsWith('jv') ||
             input.startsWith('qv') ||
             input.startsWith('xv')) {
@@ -69,8 +69,8 @@ class MandarinOrthography extends Orthography {
       var pinyin = '';
       for (int i = 0; i < input.length; ++i) {
         var s = input[i];
-        if (mapPinyin.containsKey(s)) {
-          var value = mapPinyin[s]!;
+        if (_mapPinyin.containsKey(s)) {
+          var value = _mapPinyin[s]!;
           assert(value.length == 2);
           var base = value[0];
           var t = value[1];
@@ -103,7 +103,7 @@ class MandarinOrthography extends Orthography {
           pos = input.length - 1;
         } else {
           // other cases, tone should on vowels
-          for (var v in vowels) {
+          for (var v in _vowels) {
             if ((pos = input.indexOf(v)) > 0) break;
           }
         }
@@ -113,17 +113,17 @@ class MandarinOrthography extends Orthography {
         for (int i = 0; i < input.length; ++i) {
           var t = (i == pos) ? tone : '_';
           var key = input[i] + t;
-          if (mapPinyin.containsKey(key)) {
-            result += mapPinyin[key]!;
+          if (_mapPinyin.containsKey(key)) {
+            result += _mapPinyin[key]!;
           } else {
             result += input[i];
-            if (t != '_') result += mapPinyin['_$t']!;
+            if (t != '_') result += _mapPinyin['_$t']!;
           }
         }
 
         return result;
       case MandarinDisplayOption.bopomofo:
-        if (!mapToBopomofoWhole.containsKey(input)) {
+        if (!_mapToBopomofoWhole.containsKey(input)) {
           if (input.startsWith('ju') ||
               input.startsWith('qu') ||
               input.startsWith('xu')) {
@@ -134,27 +134,27 @@ class MandarinOrthography extends Orthography {
           if (pos > 2) pos = 2;
 
           while (pos > 0) {
-            if (mapToBopomofoPartial.containsKey(input.substring(0, pos))) {
+            if (_mapToBopomofoPartial.containsKey(input.substring(0, pos))) {
               break;
             }
             --pos;
           }
 
           if (pos == 0) return null;
-          if (!mapToBopomofoPartial.containsKey(input.substring(pos))) {
+          if (!_mapToBopomofoPartial.containsKey(input.substring(pos))) {
             return null;
           }
 
-          input = mapToBopomofoPartial[input.substring(0, pos)]! +
-              mapToBopomofoPartial[input.substring(pos)]!;
+          input = _mapToBopomofoPartial[input.substring(0, pos)]! +
+              _mapToBopomofoPartial[input.substring(pos)]!;
         } else {
-          input = mapToBopomofoWhole[input]!;
+          input = _mapToBopomofoWhole[input]!;
         }
 
         if ('234'.contains(tone)) {
-          return input + mapToBopomofoTone[tone]!;
+          return input + _mapToBopomofoTone[tone]!;
         } else if (tone == '_') {
-          return mapToBopomofoTone[tone]! + input;
+          return _mapToBopomofoTone[tone]! + input;
         }
 
         return input;
@@ -196,23 +196,23 @@ class MandarinOrthography extends Orthography {
   }
 
   Future<void> _initPinyin() async {
-    mapPinyin = {};
+    _mapPinyin = {};
     var fields =
         await parseTsvFile('assets/character/orthography_pu_pinyin.tsv');
     for (var field in fields) {
       if (field.length != 3) continue;
-      mapPinyin[field[0]] = field[1] + field[2];
-      mapPinyin[field[1] + field[2]] = field[0];
+      _mapPinyin[field[0]] = field[1] + field[2];
+      _mapPinyin[field[1] + field[2]] = field[0];
     }
   }
 
   Future<void> _initBopomofo() async {
-    mapFromBopomofoPartial = {};
-    mapToBopomofoPartial = {};
-    mapFromBopomofoTone = {};
-    mapToBopomofoTone = {};
-    mapFromBopomofoWhole = {};
-    mapToBopomofoWhole = {};
+    _mapFromBopomofoPartial = {};
+    _mapToBopomofoPartial = {};
+    _mapFromBopomofoTone = {};
+    _mapToBopomofoTone = {};
+    _mapFromBopomofoWhole = {};
+    _mapToBopomofoWhole = {};
     var fields =
         await parseTsvFile('assets/character/orthography_pu_bopomofo.tsv');
     for (var field in fields) {
@@ -222,14 +222,14 @@ class MandarinOrthography extends Orthography {
       }
       if ('234_'.contains(field[1])) {
         // map tones
-        mapFromBopomofoTone[field[0]] = field[1];
-        mapToBopomofoTone[field[1]] = field[0];
+        _mapFromBopomofoTone[field[0]] = field[1];
+        _mapToBopomofoTone[field[1]] = field[0];
       } else {
-        mapFromBopomofoPartial[field[0]] = field[1];
-        mapToBopomofoPartial[field[1]] = field[0];
+        _mapFromBopomofoPartial[field[0]] = field[1];
+        _mapToBopomofoPartial[field[1]] = field[0];
         if (field.length > 2) {
-          mapFromBopomofoWhole[field[0]] = field[2];
-          mapToBopomofoWhole[field[2]] = field[0];
+          _mapFromBopomofoWhole[field[0]] = field[2];
+          _mapToBopomofoWhole[field[2]] = field[0];
         }
       }
     }

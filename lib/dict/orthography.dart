@@ -5,7 +5,7 @@ abstract class Orthography {
   Future<void> init();
 
   /// 标准化查询读音, 读音 -> DB中存储的字段
-  String? canonicalize(String input);
+  String? canonicalize(String input, int system);
 
   /// 展示读音
   String? display(String input, int system);
