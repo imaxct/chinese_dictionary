@@ -1,5 +1,5 @@
 name: chinese_dictionary
-description: A new Flutter project.
+description: A Chinese dictionary APP that supports Mandarin, Cantonese, Middle Chinese, Shanghainese, Vietnamese and Japanese queries.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
