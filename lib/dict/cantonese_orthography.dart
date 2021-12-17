@@ -228,7 +228,7 @@ class CantoneseOrthography extends Orthography {
     _mapFinalsY2J = {};
     _mapFinalsL2J = {};
     var fields =
-        await parseTsvFile('assets/character/orthography_ct_Finals.tsv');
+        await parseTsvFile('assets/character/orthography_ct_finals.tsv');
     for (var field in fields) {
       _mapFinalsJ2C[field[0]] = field[1];
       _mapFinalsJ2Y[field[0]] = field[2];

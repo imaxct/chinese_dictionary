@@ -28,7 +28,7 @@ enum ShanghaineseDisplayOption {
 }
 
 /// 闽南语
-enum HokkienDisplayOption {
+enum MinnanDisplayOption {
   normal,
 }
 

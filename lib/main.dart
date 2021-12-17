@@ -1,5 +1,9 @@
+import 'package:chinese_dictionary/dict/hanzi.dart';
 import 'package:chinese_dictionary/dict/cantonese_orthography.dart';
 import 'package:chinese_dictionary/dict/mandarin_orthography.dart';
+import 'package:chinese_dictionary/dict/middle_chinese_orthography.dart';
+import 'package:chinese_dictionary/dict/minnan_orthography.dart';
+import 'package:chinese_dictionary/dict/shanghainese_orthography.dart';
 import 'package:flutter/material.dart';
 
 Future<void> main() async {
@@ -9,8 +13,12 @@ Future<void> main() async {
 }
 
 Future<void> _init() async {
+  await Hanzi.instance.init();
   await MandarinOrthography.instance.init();
   await CantoneseOrthography.instance.init();
+  await MiddleChineseOrthography.instance.init();
+  await MinnanOrthography.instance.init();
+  await ShanghaineseOrthography.instance.init();
 }
 
 class App extends StatelessWidget {

@@ -15,7 +15,7 @@ class Character {
   List<String>? shanghainese;
 
   /// 闽南语
-  List<String>? hokkien;
+  List<String>? minnan;
 
   /// 朝鲜语
   List<String>? korean;
@@ -44,7 +44,7 @@ class Character {
     required this.mandarin,
     required this.cantonese,
     required this.shanghainese,
-    required this.hokkien,
+    required this.minnan,
     required this.korean,
     required this.vietnamese,
     required this.japaneseGoOn,
