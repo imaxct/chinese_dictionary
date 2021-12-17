@@ -4,6 +4,8 @@ import 'package:chinese_dictionary/dict/mandarin_orthography.dart';
 import 'package:chinese_dictionary/dict/middle_chinese_orthography.dart';
 import 'package:chinese_dictionary/dict/minnan_orthography.dart';
 import 'package:chinese_dictionary/dict/shanghainese_orthography.dart';
+import 'package:chinese_dictionary/util/db_helper.dart';
+import 'package:chinese_dictionary/util/shared_preferences_util.dart';
 import 'package:flutter/material.dart';
 
 Future<void> main() async {
@@ -19,6 +21,9 @@ Future<void> _init() async {
   await MiddleChineseOrthography.instance.init();
   await MinnanOrthography.instance.init();
   await ShanghaineseOrthography.instance.init();
+
+  await SharedPreferencesUtil.init();
+  await DbHelper.instance.init();
 }
 
 class App extends StatelessWidget {

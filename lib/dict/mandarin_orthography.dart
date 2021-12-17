@@ -1,4 +1,4 @@
-import 'package:chinese_dictionary/dict/display_option_enum.dart';
+import 'package:chinese_dictionary/common/display_option_enum.dart';
 import 'package:chinese_dictionary/dict/orthography.dart';
 import 'package:flutter/cupertino.dart';
 
